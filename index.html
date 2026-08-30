@@ -359,6 +359,11 @@ function openChapter(id){
     return;
   }
 
+  if(id === 4){
+    location.href = "division.html";
+    return;
+  }
+
   alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
 }
 
