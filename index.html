@@ -349,6 +349,11 @@ function openChapter(id){
     return;
   }
 
+  if(id === 2){
+    location.href = "addition-subtraktion.html";
+    return;
+  }
+
   alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
 }
 
