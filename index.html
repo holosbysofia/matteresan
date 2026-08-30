@@ -342,8 +342,14 @@ function startJourney(){
   openChapter(current.id)
 }
 function openChapter(id){
-  if(!state.open[id])return;
-  alert(`Nästa steg blir att bygga själva träningssidan för Kapitel ${id}: ${chapters.find(c=>c.id===id).title}.`)
+  if(!state.open[id]) return;
+
+  if(id === 1){
+    location.href = "taluppfattning.html";
+    return;
+  }
+
+  alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
 }
 
 teacherBtn.onclick=()=>{modal.classList.add("show");pin.value="";msg.textContent=""}
