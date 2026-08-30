@@ -379,6 +379,11 @@ function openChapter(id){
     return;
   }
 
+  if(id === 8){
+    location.href = "algebra.html";
+    return;
+  }
+
   alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
 }
 
