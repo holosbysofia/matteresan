@@ -354,6 +354,11 @@ function openChapter(id){
     return;
   }
 
+  if(id === 3){
+    location.href = "multiplikation.html";
+    return;
+  }
+
   alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
 }
 
