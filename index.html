@@ -3,376 +3,149 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MatteResan – träna matematik åk 4–6</title>
+<title>MatteResan</title>
 <style>
-:root{
-  --sand:#f3eee4;
-  --paper:#fffdf8;
-  --green:#1f4b36;
-  --green2:#dfeadf;
-  --text:#173629;
-  --muted:#6e786f;
-  --line:#d9dfd7;
-  --gold:#f2e6b9;
-  --shadow:0 10px 28px rgba(38,55,43,.08);
-}
-*{box-sizing:border-box}
 body{
   margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--sand);
-  color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+  background:#f4efe4;
+  color:#173629;
 }
-button{font:inherit;cursor:pointer}
-.wrap{max-width:1200px;margin:auto;padding:24px}
+.wrap{max-width:1100px;margin:auto;padding:24px}
 .hero{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:28px;
-  padding:32px;
-  box-shadow:var(--shadow);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
+  background:#fffdf8;
+  border:1px solid #d8dfd7;
+  border-radius:24px;
+  padding:28px;
+  margin-bottom:20px;
 }
-.brand h1{
-  margin:0;
-  font-size:clamp(38px,6vw,66px);
-  letter-spacing:-1px;
-}
-.brand .tag{
-  margin-top:8px;
-  font-size:19px;
-  color:var(--muted);
-}
-.brand .sub{
-  margin-top:14px;
-  max-width:650px;
-  line-height:1.5;
-}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
-.btn{
-  border:0;
-  border-radius:14px;
-  padding:12px 17px;
-  font-weight:800;
-  background:var(--green);
-  color:#fff;
-}
-.btn.secondary{
-  background:var(--green2);
-  color:var(--green);
-  border:1px solid var(--line);
-}
-.notice{
-  background:var(--gold);
-  border:1px solid #e3d18c;
-  border-radius:17px;
-  padding:14px 16px;
-  margin:18px 0;
-  color:#65551e;
-}
-.topgrid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:14px;
-  margin-bottom:18px;
-}
-.box{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:18px;
-  box-shadow:var(--shadow);
-}
-.box strong{display:block;font-size:28px}
-.box span{color:var(--muted);font-size:14px}
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:12px;
-  flex-wrap:wrap;
-  margin:24px 0 12px;
-}
-.section-title h2{margin:0;font-size:28px}
-.section-title p{margin:0;color:var(--muted)}
+h1{font-size:48px;margin:0 0 8px}
+p{line-height:1.5}
 .grid{
   display:grid;
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:16px;
 }
 .card{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:22px;
+  background:#fffdf8;
+  border:1px solid #d8dfd7;
+  border-radius:20px;
   padding:18px;
-  box-shadow:var(--shadow);
-  min-height:220px;
 }
-.card.locked{opacity:.63}
-.badge{
-  display:inline-flex;
-  border-radius:999px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:800;
-  background:var(--green2);
-}
-.badge.lock{background:#ebe9e3;color:#666}
-.card h3{margin:14px 0 6px;font-size:21px}
-.card p{margin:0;color:var(--muted);line-height:1.45}
-.skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.skills span{
-  background:#f7f3ea;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:5px 8px;
-  font-size:12px;
-}
-.card footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-top:16px;
-}
-.progress{
-  height:8px;
-  background:#e8ece6;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:14px;
-}
-.progress i{display:block;height:100%;background:var(--green)}
-.teacher{
-  display:none;
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:20px;
-  margin:18px 0;
-  box-shadow:var(--shadow);
-}
-.teacher.show{display:block}
-.teacher h2{margin:0 0 6px}
-.teacher p{margin:0 0 14px;color:var(--muted)}
-.trow{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  gap:12px;
-  align-items:center;
-  border-top:1px solid var(--line);
-  padding:12px 0;
-}
-.switch{
-  width:48px;height:28px;border:0;border-radius:999px;background:#c9c8c1;padding:3px;
-}
-.switch:before{
-  content:"";
-  display:block;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;
-}
-.switch.on{background:var(--green)}
-.switch.on:before{transform:translateX(20px)}
-.small{font-size:13px;color:var(--muted)}
-.modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.38);
-  display:none;align-items:center;justify-content:center;padding:20px;
-}
-.modal.show{display:flex}
-.modalbox{
-  width:min(480px,100%);
-  background:var(--paper);
-  border-radius:22px;
-  padding:22px;
-}
-.modalbox input{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--line);
+.card h2{font-size:21px;margin:0 0 8px}
+.card p{color:#6d786f;min-height:60px}
+a.btn{
+  display:inline-block;
+  background:#1f4b36;
+  color:white;
+  text-decoration:none;
+  padding:11px 15px;
   border-radius:12px;
-  margin:8px 0 12px;
+  font-weight:700;
 }
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr 1fr}
-  .topgrid{grid-template-columns:1fr 1fr}
-  .topgrid .box:first-child{grid-column:1/-1}
+.locked{
+  display:inline-block;
+  padding:11px 15px;
+  border-radius:12px;
+  background:#e3ede5;
+  color:#1f4b36;
+  font-weight:700;
 }
-@media(max-width:620px){
-  .grid{grid-template-columns:1fr}
-  .topgrid{grid-template-columns:1fr}
-  .topgrid .box:first-child{grid-column:auto}
+.note{
+  background:#f2e6b9;
+  border:1px solid #dfcd8c;
+  padding:14px;
+  border-radius:14px;
+  margin-bottom:18px;
 }
+@media(max-width:850px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <section class="hero">
-    <div class="brand">
-      <h1>MatteResan</h1>
-      <div class="tag">Träna matematik. Klara ett område. Gå vidare till nästa.</div>
-      <div class="sub">
-        Här tränar du matematik steg för steg. Du arbetar klart ett område i taget.
-        Din lärare bestämmer när nästa kapitel öppnas.
-      </div>
-    </div>
-    <div class="hero-actions">
-      <button class="btn" onclick="startJourney()">Fortsätt min resa</button>
-      <button class="btn secondary" id="teacherBtn">Lärarläge</button>
-    </div>
+    <h1>MatteResan</h1>
+    <p>Träna matematik. Klara ett område. Gå vidare till nästa.</p>
   </section>
 
-  <div class="notice">
-    Du behöver göra färdigt det kapitel du arbetar med innan du går vidare. Nästa kapitel öppnas av läraren.
+  <div class="note">
+    Felsökningsversion: Kapitel 1–9 använder vanliga länkar utan JavaScript.
   </div>
 
-  <section class="topgrid">
-    <div class="box">
-      <strong id="currentText">Kapitel 1</strong>
-      <span>du arbetar med just nu</span>
-    </div>
-    <div class="box">
-      <strong id="doneCount">0</strong>
-      <span>färdiga kapitel</span>
-    </div>
-    <div class="box">
-      <strong id="openCount">1</strong>
-      <span>öppna kapitel</span>
-    </div>
+  <section class="grid">
+    <article class="card">
+      <h2>Kapitel 1: Taluppfattning</h2>
+      <p>Positionssystem, utvecklad form, avrundning och negativa tal.</p>
+      <a class="btn" href="./taluppfattning.html">Öppna Taluppfattning</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 2: Addition och subtraktion</h2>
+      <p>Huvudräkning, skriftliga metoder, överslag och problemlösning.</p>
+      <a class="btn" href="./addition-subtraktion.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 3: Multiplikation</h2>
+      <p>Tabeller, strategier och multiplikation med större tal.</p>
+      <a class="btn" href="./multiplikation.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 4: Division</h2>
+      <p>Delning, grupper, kort division och rest.</p>
+      <a class="btn" href="./division.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 5: Bråk</h2>
+      <p>Täljare, nämnare, likvärdiga bråk och beräkningar.</p>
+      <a class="btn" href="./brak.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 6: Decimaltal</h2>
+      <p>Platsvärde, jämförelser och beräkningar.</p>
+      <a class="btn" href="./decimaltal.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 7: Procent</h2>
+      <p>Procent av tal, samband och rabatt.</p>
+      <a class="btn" href="./procent.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 8: Algebra</h2>
+      <p>Mönster, variabler, uttryck och ekvationer.</p>
+      <a class="btn" href="./algebra.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 9: Geometri</h2>
+      <p>Vinklar, omkrets, area, symmetri och skala.</p>
+      <a class="btn" href="./geometri.html">Öppna kapitlet</a>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 10: Mätning</h2>
+      <p>Byggs snart.</p>
+      <span class="locked">Kommer snart</span>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 11: Statistik och sannolikhet</h2>
+      <p>Byggs snart.</p>
+      <span class="locked">Kommer snart</span>
+    </article>
+
+    <article class="card">
+      <h2>Kapitel 12: Problemlösning</h2>
+      <p>Byggs snart.</p>
+      <span class="locked">Kommer snart</span>
+    </article>
   </section>
-
-  <section class="teacher" id="teacherPanel">
-    <div style="display:flex;justify-content:space-between;gap:12px;align-items:start;flex-wrap:wrap">
-      <div>
-        <h2>Lärarläge</h2>
-        <p>Öppna eller lås kapitel. Kapitel 1 är alltid öppet.</p>
-      </div>
-      <button class="btn secondary" onclick="teacherPanel.classList.remove('show')">Stäng</button>
-    </div>
-    <div id="teacherRows"></div>
-  </section>
-
-  <div class="section-title">
-    <div>
-      <h2>Kapitel</h2>
-      <p>Välj det kapitel som är öppet för dig.</p>
-    </div>
-  </div>
-
-  <section class="grid" id="chapterGrid"></section>
 </div>
-
-<div class="modal" id="modal">
-  <div class="modalbox">
-    <h3>Lärarläge</h3>
-    <div class="small">PIN i prototypen: 2468</div>
-    <input id="pin" type="password" placeholder="Skriv PIN-kod">
-    <div style="display:flex;gap:10px">
-      <button class="btn" id="pinOk">Öppna</button>
-      <button class="btn secondary" onclick="modal.classList.remove('show')">Avbryt</button>
-    </div>
-    <div id="msg" class="small" style="margin-top:10px"></div>
-  </div>
-</div>
-
-<script>
-const chapters=[
- {id:1,title:"Taluppfattning",desc:"Förstå tal, platsvärde, avrundning och negativa tal.",skills:["positionssystem","utvecklad form","avrundning"]},
- {id:2,title:"Addition och subtraktion",desc:"Träna huvudräkning, skriftliga metoder och problemlösning.",skills:["huvudräkning","uppställning","rimlighet"]},
- {id:3,title:"Multiplikation",desc:"Träna tabeller, strategier och multiplikation med större tal.",skills:["tabeller","strategier","textuppgifter"]},
- {id:4,title:"Division",desc:"Förstå delning, kort division, rest och samband.",skills:["delning","kort division","rest"]},
- {id:5,title:"Bråk",desc:"Arbeta med delar av helhet, likvärdiga bråk och beräkningar.",skills:["täljare","nämnare","jämföra bråk"]},
- {id:6,title:"Decimaltal",desc:"Träna tiondelar, hundradelar och beräkningar.",skills:["platsvärde","jämföra","beräkna"]},
- {id:7,title:"Procent",desc:"Förstå procent och kopplingen mellan bråk, decimal och procent.",skills:["25 %","50 %","75 %"]},
- {id:8,title:"Algebra",desc:"Mönster, variabler, uttryck och enkla ekvationer.",skills:["mönster","x","ekvationer"]},
- {id:9,title:"Geometri",desc:"Vinklar, omkrets, area, symmetri och skala.",skills:["vinklar","area","omkrets"]},
- {id:10,title:"Mätning",desc:"Längd, massa, volym, tid och enhetsomvandling.",skills:["längd","massa","volym"]},
- {id:11,title:"Statistik och sannolikhet",desc:"Tabeller, diagram, medelvärde och sannolikhet.",skills:["diagram","medelvärde","sannolikhet"]},
- {id:12,title:"Problemlösning",desc:"Förstå problem, välja strategi och förklara lösningar.",skills:["strategier","rimlighet","resonemang"]}
-];
-
-const key="matterson-start-v1";
-let state=JSON.parse(localStorage.getItem(key)||'{"open":{"1":true},"progress":{}}');
-state.open={1:true,...(state.open||{})};
-state.progress=state.progress||{};
-
-function save(){localStorage.setItem(key,JSON.stringify(state));render()}
-function pct(id){return state.progress[id]||0}
-
-function render(){
-  chapterGrid.innerHTML=chapters.map(c=>{
-    const open=!!state.open[c.id], p=pct(c.id);
-    return `<article class="card ${open?"":"locked"}">
-      <span class="badge ${open?"":"lock"}">${open?"● Öppet":"🔒 Låst"}</span>
-      <h3>Kapitel ${c.id}: ${c.title}</h3>
-      <p>${c.desc}</p>
-      <div class="skills">${c.skills.map(s=>`<span>${s}</span>`).join("")}</div>
-      <div class="progress"><i style="width:${p}%"></i></div>
-      <footer>
-        <span class="small">${p}% klart</span>
-        <button class="btn ${open?"":"secondary"}" ${open?"":"disabled"} onclick="openChapter(${c.id})">${open?"Starta":"Låst"}</button>
-      </footer>
-    </article>`
-  }).join("");
-
-  teacherRows.innerHTML=chapters.map(c=>{
-    const open=!!state.open[c.id];
-    return `<div class="trow">
-      <div><strong>Kapitel ${c.id}: ${c.title}</strong><div class="small">${pct(c.id)}% klart</div></div>
-      <button class="switch ${open?"on":""}" onclick="toggle(${c.id})"></button>
-      <div class="small">${open?"Öppet":"Låst"}</div>
-    </div>`
-  }).join("");
-
-  openCount.textContent=chapters.filter(c=>state.open[c.id]).length;
-  doneCount.textContent=chapters.filter(c=>pct(c.id)>=100).length;
-  const current=chapters.find(c=>state.open[c.id]&&pct(c.id)<100)||chapters.find(c=>state.open[c.id])||chapters[0];
-  currentText.textContent=`Kapitel ${current.id}: ${current.title}`;
-}
-
-function toggle(id){
-  if(id===1)return;
-  state.open[id]=!state.open[id];
-  save()
-}
-function startJourney(){
-  const current=chapters.find(c=>state.open[c.id]&&pct(c.id)<100)||chapters.find(c=>state.open[c.id])||chapters[0];
-  openChapter(current.id)
-}
-function openChapter(id){
-  if(!state.open[id]) return;
-
-  const pages = {
-    1: "taluppfattning.html",
-    2: "addition-subtraktion.html",
-    3: "multiplikation.html",
-    4: "division.html",
-    5: "brak.html",
-    6: "decimaltal.html",
-    7: "procent.html",
-    8: "algebra.html",
-    9: "geometri.html"
-  };
-
-  if(pages[id]){
-    window.location.href = pages[id];
-    return;
-  }
-
-  alert(`Kapitel ${id} är inte färdigbyggt ännu.`);
-}
-
-teacherBtn.onclick=()=>{modal.classList.add("show");pin.value="";msg.textContent=""}
-pinOk.onclick=()=>{
- if(pin.value==="2468"){
-   modal.classList.remove("show");
-   teacherPanel.classList.add("show");
-   teacherPanel.scrollIntoView({behavior:"smooth"})
- }else msg.textContent="Fel PIN-kod."
-}
-render()
-</script>
 </body>
 </html>
