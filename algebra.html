@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Algebra – MatteResan</title>
+<style>
+:root{
+  --bg:#f4efe4;--paper:#fffdf8;--green:#1f4b36;--green2:#e3ede5;--text:#173629;
+  --muted:#6d786f;--line:#d8dfd7;--gold:#f2e6b9;--shadow:0 10px 28px rgba(38,55,43,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.wrap{max-width:1160px;margin:auto;padding:24px}
+header{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:26px;box-shadow:var(--shadow)}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{margin:4px 0 5px;font-size:clamp(32px,5vw,52px)}
+.subtitle{color:var(--muted);font-size:17px}
+.btn{border:0;border-radius:14px;padding:11px 16px;font-weight:800;background:var(--green);color:#fff}
+.btn.secondary{background:var(--green2);color:var(--green);border:1px solid var(--line)}
+.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}
+.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--green2);font-size:13px;font-weight:800}
+.progress-wrap{margin-top:18px}.progress{height:12px;background:#e8ece7;border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--green);width:0}
+.progress-text{font-size:13px;color:var(--muted);margin-top:5px}
+.notice{margin:16px 0;background:var(--gold);border:1px solid #dfcd8c;border-radius:16px;padding:13px 15px;color:#63531e}
+.sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}
+.card.locked{opacity:.52}.card h2{font-size:22px;margin:10px 0 6px}.card p{margin:0;color:var(--muted);line-height:1.45}
+.meta{font-size:13px;color:var(--muted);margin-top:8px}
+.work{display:none;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}.work.show{display:block}
+.example{background:#f7f3ea;border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}
+.q{background:#f8f5ed;border:1px solid #e8e2d6;border-radius:14px;padding:13px;margin:11px 0}
+.q strong{display:block;margin-bottom:8px}
+.answer{display:grid;grid-template-columns:1fr auto;gap:8px}
+.answer input{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.feedback{font-size:14px;font-weight:800;margin-top:7px}.ok{color:#21643b}.no{color:#9b3636}
+textarea{width:100%;min-height:110px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:780px){.sections{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="top">
+    <div>
+      <span class="badge">MatteResan · Kapitel 8</span>
+      <h1>Algebra</h1>
+      <div class="subtitle">Mönster · variabler · uttryck · likhet · enkla ekvationer</div>
+    </div>
+    <div class="footer-actions">
+      <button class="btn secondary" onclick="location.href='index.html'">← Till MatteResan</button>
+      <button class="btn ghost" onclick="resetChapter()">Nollställ kapitlet</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="progress-text" id="progressText">0 % klart</div>
+  </div>
+</header>
+
+<div class="notice">Gör delarna i ordning. Nästa del öppnas först när föregående del är klar.</div>
+<section class="sections" id="sections"></section>
+</div>
+
+<script>
+const STORE="matterson-algebra-v1";
+const parts=[
+ {key:"patterns",title:"1. Mönster",desc:"Fortsätt talföljder och beskriv regeln."},
+ {key:"variable",title:"2. Variabler",desc:"Förstå att en bokstav kan stå för ett tal."},
+ {key:"expressions",title:"3. Uttryck",desc:"Beräkna enkla algebraiska uttryck."},
+ {key:"equality",title:"4. Likhetstecknet",desc:"Förstå att båda sidor ska ha samma värde."},
+ {key:"equations",title:"5. Enkla ekvationer",desc:"Lös ekvationer med ett okänt tal."},
+ {key:"reason",title:"6. Resonera",desc:"Förklara algebra med matematiska begrepp.",kind:"text"},
+ {key:"problem",title:"7. Problemlösning",desc:"Lös två större algebraiska problem.",kind:"text"},
+ {key:"check",title:"8. Kapitelkoll",desc:"15 blandade uppgifter. Minst 80 % rätt krävs."}
+];
+
+let state;
+try{state=JSON.parse(localStorage.getItem(STORE))||{done:{},scores:{}}}catch(e){state={done:{},scores:{}}}
+state.done=state.done||{};state.scores=state.scores||{};
+
+function save(){localStorage.setItem(STORE,JSON.stringify(state));render();syncMainProgress()}
+function syncMainProgress(){
+  try{
+    const mainKey="matterson-start-v1";
+    let s=JSON.parse(localStorage.getItem(mainKey)||'{"open":{"1":true},"progress":{}}');
+    s.progress=s.progress||{};
+    s.progress[8]=Math.round(parts.filter(p=>state.done[p.key]).length/parts.length*100);
+    localStorage.setItem(mainKey,JSON.stringify(s));
+  }catch(e){}
+}
+function unlocked(i){if(i===0)return true;return !!state.done[parts[i-1].key]}
+function progress(){return Math.round(parts.filter(p=>state.done[p.key]).length/parts.length*100)}
+function render(){
+  const p=progress();bar.style.width=p+"%";progressText.textContent=p+" % klart";
+  sections.innerHTML=parts.map((part,i)=>{
+    const u=unlocked(i),d=!!state.done[part.key],score=state.scores[part.key];
+    return `<article class="card ${u?"":"locked"}">
+      <span class="badge">${d?"✓ Klar":u?"Öppen":"🔒 Låst"}</span>
+      <h2>${part.title}</h2><p>${part.desc}</p>
+      <div class="meta">${score!==undefined?`Senaste resultat: ${score} %`:""}</div>
+      <div style="margin-top:12px">${u?`<button class="btn ${d?"secondary":""}" onclick="openPart('${part.key}')">${d?"Träna igen":"Starta"}</button>`:`<span class="meta">Gör föregående del först.</span>`}</div>
+      <div class="work" id="work-${part.key}"></div>
+    </article>`;
+  }).join("")
+}
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function choice(a){return a[Math.floor(Math.random()*a.length)]}
+function norm(x){return String(x).trim().toLowerCase().replace(/\s+/g,"").replace(".",",")}
+
+function qPatterns(){
+  const start=rand(1,20),step=choice([2,3,4,5,10]);
+  const seq=[start,start+step,start+2*step,start+3*step];
+  return [`Fortsätt mönstret: ${seq[0]}, ${seq[1]}, ${seq[2]}, ${seq[3]}, __`,String(start+4*step)]
+}
+function qVariable(){
+  const x=rand(2,20),a=rand(1,15);
+  if(Math.random()<.5)return [`Om x = ${x}, vad är x + ${a}?`,String(x+a)]
+  return [`Om n = ${x}, vad är 2 · n?`,String(2*x)]
+}
+function qExpressions(){
+  const x=rand(2,15),a=rand(1,10),b=rand(2,6);
+  if(Math.random()<.5)return [`Om x = ${x}, beräkna x + ${a}.`,String(x+a)]
+  return [`Om x = ${x}, beräkna ${b}x.`,String(b*x)]
+}
+function qEquality(){
+  const a=rand(3,20),b=rand(3,20),sum=a+b;
+  if(Math.random()<.5)return [`Fyll i talet: ${a} + ${b} = __ + ${rand(1,sum-1)}`, "DYNAMIC"]
+  const c=rand(1,sum-1);
+  return [`Fyll i talet: ${sum} = ${c} + __`,String(sum-c)]
+}
+function makeEquality(){
+  const a=rand(3,20),b=rand(3,20),sum=a+b,c=rand(1,sum-1);
+  return [`Fyll i talet: ${a} + ${b} = ${c} + __`,String(sum-c)]
+}
+function qEquations(){
+  const x=rand(2,20),a=rand(2,12),t=rand(1,4);
+  if(t===1)return [`x + ${a} = ${x+a}. x =`,String(x)]
+  if(t===2)return [`x − ${a} = ${x-a}. x =`,String(x)]
+  if(t===3)return [`${a} + x = ${a+x}. x =`,String(x)]
+  return [`${a}x = ${a*x}. x =`,String(x)]
+}
+function qMixed(){
+  const fn=choice([qPatterns,qVariable,qExpressions,makeEquality,qEquations]);
+  return fn()
+}
+
+let current={};
+function openPart(key){
+  const el=document.getElementById("work-"+key);el.classList.add("show");
+
+  if(key==="reason"){
+    el.innerHTML=`<div class="q"><strong>1. Förklara</strong>
+    <p>Vad betyder x i ekvationen x + 7 = 19?</p>
+    <textarea id="r1" placeholder="Förklara med egna ord..."></textarea></div>
+    <div class="q"><strong>2. Likhet</strong>
+    <p>Varför är 8 + 4 = 10 + 2 en korrekt likhet?</p>
+    <textarea id="r2" placeholder="Förklara vad likhetstecknet betyder..."></textarea></div>
+    <button class="btn" onclick="finishText('reason',['r1','r2'])">Spara mina svar</button>
+    <div id="msg-reason" class="feedback"></div>`;return
+  }
+
+  if(key==="problem"){
+    el.innerHTML=`<div class="q"><strong>Problem 1</strong>
+    <p>Tre gånger ett tal plus 5 är 29. Vilket är talet? Skriv en ekvation och lös den.</p>
+    <textarea id="p1" placeholder="Skriv ekvation, beräkning och svar..."></textarea></div>
+    <div class="q"><strong>Problem 2</strong>
+    <p>Ett tal minskas med 8 och resultatet blir 17. Vilket är talet? Visa med en ekvation.</p>
+    <textarea id="p2" placeholder="Visa din lösning..."></textarea></div>
+    <button class="btn" onclick="finishText('problem',['p1','p2'])">Lämna problemlösning</button>
+    <div id="msg-problem" class="feedback"></div>`;return
+  }
+
+  let gen,count=12;
+  if(key==="patterns")gen=qPatterns;
+  if(key==="variable")gen=qVariable;
+  if(key==="expressions")gen=qExpressions;
+  if(key==="equality")gen=makeEquality;
+  if(key==="equations")gen=qEquations;
+  if(key==="check"){gen=qMixed;count=15}
+
+  const qs=Array.from({length:count},()=>gen());
+  current[key]=qs;
+
+  el.innerHTML=`<div class="example">${
+    key==="patterns"?"Titta på hur mycket talet förändras varje steg.":
+    key==="variable"?"En variabel är en bokstav som kan representera ett tal.":
+    key==="expressions"?"Om x = 4 så betyder 3x samma som 3 · 4.":
+    key==="equality"?"Likhetstecknet betyder att uttrycken på båda sidor har samma värde.":
+    key==="equations"?"Tänk vilket tal som gör att båda sidor blir lika.":
+    "Kapitelkollen blandar alla delar."
+  }</div>
+  ${qs.map((q,i)=>`<div class="q"><strong>${i+1}. ${q[0]}</strong>
+  <div class="answer"><input id="${key}-${i}" autocomplete="off">
+  <button class="btn secondary" onclick="checkOne('${key}',${i})">Kontrollera</button></div>
+  <div class="feedback" id="fb-${key}-${i}"></div></div>`).join("")}
+  <div class="footer-actions">
+    <button class="btn" onclick="finishQuiz('${key}')">Rätta hela delen</button>
+    <button class="btn secondary" onclick="openPart('${key}')">Ny omgång</button>
+  </div>
+  <div id="score-${key}" class="feedback"></div>`
+}
+function checkOne(key,i){
+  const q=current[key][i],v=norm(document.getElementById(`${key}-${i}`).value),fb=document.getElementById(`fb-${key}-${i}`);
+  const ok=v===norm(q[1]);fb.textContent=ok?"Rätt!":"Försök igen.";fb.className="feedback "+(ok?"ok":"no")
+}
+function finishQuiz(key){
+  const qs=current[key];let r=0;
+  qs.forEach((q,i)=>{if(norm(document.getElementById(`${key}-${i}`).value)===norm(q[1]))r++});
+  const pct=Math.round(r/qs.length*100);state.scores[key]=pct;const msg=document.getElementById("score-"+key);
+  if(pct>=80){
+    state.done[key]=true;msg.textContent=`${r} av ${qs.length} rätt (${pct} %). Delen är klar!`;msg.className="feedback ok";
+    localStorage.setItem(STORE,JSON.stringify(state));syncMainProgress();setTimeout(()=>render(),450)
+  }else{
+    msg.textContent=`${r} av ${qs.length} rätt (${pct} %). Du behöver minst 80 %. Träna vidare och försök igen.`;msg.className="feedback no";
+    localStorage.setItem(STORE,JSON.stringify(state))
+  }
+}
+function finishText(key,ids){
+  const vals=ids.map(id=>document.getElementById(id).value.trim()),msg=document.getElementById("msg-"+key);
+  if(vals.some(v=>v.length<30)){msg.textContent="Utveckla båda svaren så att ditt matematiska tänkande syns.";msg.className="feedback no";return}
+  state.done[key]=true;msg.textContent="Svaren är sparade. Delen är klar.";msg.className="feedback ok";save()
+}
+function resetChapter(){
+  if(confirm("Vill du nollställa hela Kapitel 8?")){state={done:{},scores:{}};localStorage.removeItem(STORE);save()}
+}
+render();syncMainProgress();
+</script>
+</body>
+</html>
