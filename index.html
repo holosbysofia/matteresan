@@ -3,263 +3,76 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>MatteResan – träna matematik åk 4–6</title>
+<title>MatteResan – åk 4–6</title>
 <style>
 :root{
-  --sand:#f3eee4;
-  --paper:#fffdf8;
-  --green:#1f4b36;
-  --green2:#dfeadf;
-  --text:#173629;
-  --muted:#6e786f;
-  --line:#d9dfd7;
-  --gold:#f2e6b9;
-  --shadow:0 10px 28px rgba(38,55,43,.08);
+  --bg:#f4efe4;--paper:#fffdf8;--green:#1f4b36;--green2:#e3ede5;--text:#173629;
+  --muted:#6d786f;--line:#d8dfd7;--gold:#f2e6b9;--shadow:0 10px 28px rgba(38,55,43,.08);
 }
 *{box-sizing:border-box}
-body{
-  margin:0;
-  font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--sand);
-  color:var(--text);
-}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+a{text-decoration:none;color:inherit}
 button{font:inherit;cursor:pointer}
 .wrap{max-width:1200px;margin:auto;padding:24px}
-.hero{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:28px;
-  padding:32px;
-  box-shadow:var(--shadow);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  flex-wrap:wrap;
-}
-.brand h1{
-  margin:0;
-  font-size:clamp(38px,6vw,66px);
-  letter-spacing:-1px;
-}
-.brand .tag{
-  margin-top:8px;
-  font-size:19px;
-  color:var(--muted);
-}
-.brand .sub{
-  margin-top:14px;
-  max-width:650px;
-  line-height:1.5;
-}
-.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
-.btn{
-  border:0;
-  border-radius:14px;
-  padding:12px 17px;
-  font-weight:800;
-  background:var(--green);
-  color:#fff;
-}
-.btn.secondary{
-  background:var(--green2);
-  color:var(--green);
-  border:1px solid var(--line);
-}
-.notice{
-  background:var(--gold);
-  border:1px solid #e3d18c;
-  border-radius:17px;
-  padding:14px 16px;
-  margin:18px 0;
-  color:#65551e;
-}
-.topgrid{
-  display:grid;
-  grid-template-columns:2fr 1fr 1fr;
-  gap:14px;
-  margin-bottom:18px;
-}
-.box{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:20px;
-  padding:18px;
-  box-shadow:var(--shadow);
-}
-.box strong{display:block;font-size:28px}
-.box span{color:var(--muted);font-size:14px}
-.section-title{
-  display:flex;
-  justify-content:space-between;
-  align-items:end;
-  gap:12px;
-  flex-wrap:wrap;
-  margin:24px 0 12px;
-}
-.section-title h2{margin:0;font-size:28px}
-.section-title p{margin:0;color:var(--muted)}
-.grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:16px;
-}
-.card{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:18px;
-  box-shadow:var(--shadow);
-  min-height:220px;
-}
-.card.locked{opacity:.63}
-.badge{
-  display:inline-flex;
-  border-radius:999px;
-  padding:6px 10px;
-  font-size:12px;
-  font-weight:800;
-  background:var(--green2);
-}
-.badge.lock{background:#ebe9e3;color:#666}
-.card h3{margin:14px 0 6px;font-size:21px}
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:var(--shadow);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.hero h1{margin:0;font-size:clamp(38px,6vw,64px)}
+.hero p{margin:8px 0 0;color:var(--muted);font-size:18px;max-width:720px;line-height:1.5}
+.actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{display:inline-block;border:0;border-radius:14px;padding:12px 16px;font-weight:800;background:var(--green);color:white}
+.btn.secondary{background:var(--green2);color:var(--green);border:1px solid var(--line)}
+.notice{margin:18px 0;background:var(--gold);border:1px solid #dfcd8c;border-radius:16px;padding:14px 16px;color:#63531e}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow);min-height:220px}
+.card.locked{opacity:.58}
+.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--green2);font-size:13px;font-weight:800}
+.badge.lock{background:#ece9e3;color:#666}
+.card h2{font-size:21px;margin:14px 0 6px}
 .card p{margin:0;color:var(--muted);line-height:1.45}
 .skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
-.skills span{
-  background:#f7f3ea;
-  border:1px solid var(--line);
-  border-radius:999px;
-  padding:5px 8px;
-  font-size:12px;
-}
-.card footer{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:10px;
-  margin-top:16px;
-}
-.progress{
-  height:8px;
-  background:#e8ece6;
-  border-radius:999px;
-  overflow:hidden;
-  margin-top:14px;
-}
-.progress i{display:block;height:100%;background:var(--green)}
-.teacher{
-  display:none;
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:22px;
-  padding:20px;
-  margin:18px 0;
-  box-shadow:var(--shadow);
-}
-.teacher.show{display:block}
-.teacher h2{margin:0 0 6px}
-.teacher p{margin:0 0 14px;color:var(--muted)}
-.trow{
-  display:grid;
-  grid-template-columns:1fr auto auto;
-  gap:12px;
-  align-items:center;
-  border-top:1px solid var(--line);
-  padding:12px 0;
-}
-.switch{
-  width:48px;height:28px;border:0;border-radius:999px;background:#c9c8c1;padding:3px;
-}
-.switch:before{
-  content:"";
-  display:block;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;
-}
-.switch.on{background:var(--green)}
-.switch.on:before{transform:translateX(20px)}
-.small{font-size:13px;color:var(--muted)}
-.modal{
-  position:fixed;inset:0;background:rgba(0,0,0,.38);
-  display:none;align-items:center;justify-content:center;padding:20px;
-}
+.skills span{font-size:12px;background:#f7f3ea;border:1px solid var(--line);border-radius:999px;padding:5px 8px}
+.card footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.panel{display:none;background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:20px;margin:18px 0;box-shadow:var(--shadow)}
+.panel.show{display:block}
+.trow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:12px 0;border-top:1px solid var(--line)}
+.switch{width:48px;height:28px;border:0;border-radius:999px;background:#c9c8c1;padding:3px}
+.switch:before{content:"";display:block;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s}
+.switch.on{background:var(--green)}.switch.on:before{transform:translateX(20px)}
+.modal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.38);align-items:center;justify-content:center;padding:20px;z-index:20}
 .modal.show{display:flex}
-.modalbox{
-  width:min(480px,100%);
-  background:var(--paper);
-  border-radius:22px;
-  padding:22px;
-}
-.modalbox input{
-  width:100%;
-  padding:12px;
-  border:1px solid var(--line);
-  border-radius:12px;
-  margin:8px 0 12px;
-}
-@media(max-width:900px){
-  .grid{grid-template-columns:1fr 1fr}
-  .topgrid{grid-template-columns:1fr 1fr}
-  .topgrid .box:first-child{grid-column:1/-1}
-}
-@media(max-width:620px){
-  .grid{grid-template-columns:1fr}
-  .topgrid{grid-template-columns:1fr}
-  .topgrid .box:first-child{grid-column:auto}
-}
+.modalbox{width:min(460px,100%);background:var(--paper);border-radius:22px;padding:22px}
+.modalbox input{width:100%;padding:12px;border:1px solid var(--line);border-radius:12px;margin:8px 0 12px}
+.small{font-size:13px;color:var(--muted)}
+@media(max-width:900px){.grid{grid-template-columns:1fr 1fr}}
+@media(max-width:620px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <section class="hero">
-    <div class="brand">
+    <div>
       <h1>MatteResan</h1>
-      <div class="tag">Träna matematik. Klara ett område. Gå vidare till nästa.</div>
-      <div class="sub">
-        Här tränar du matematik steg för steg. Du arbetar klart ett område i taget.
-        Din lärare bestämmer när nästa kapitel öppnas.
-      </div>
+      <p>Träna matematik. Klara ett område. Gå vidare till nästa. Din lärare bestämmer vilka kapitel som är öppna.</p>
     </div>
-    <div class="hero-actions">
-      <button class="btn" onclick="startJourney()">Fortsätt min resa</button>
+    <div class="actions">
+      <a class="btn" href="taluppfattning.html">Starta MatteResan</a>
       <button class="btn secondary" id="teacherBtn">Lärarläge</button>
     </div>
   </section>
 
   <div class="notice">
-    Du behöver göra färdigt det kapitel du arbetar med innan du går vidare. Nästa kapitel öppnas av läraren.
+    Kapitel 1 är alltid öppet. Övriga kapitel öppnas av läraren.
   </div>
 
-  <section class="topgrid">
-    <div class="box">
-      <strong id="currentText">Kapitel 1</strong>
-      <span>du arbetar med just nu</span>
-    </div>
-    <div class="box">
-      <strong id="doneCount">0</strong>
-      <span>färdiga kapitel</span>
-    </div>
-    <div class="box">
-      <strong id="openCount">1</strong>
-      <span>öppna kapitel</span>
-    </div>
-  </section>
-
-  <section class="teacher" id="teacherPanel">
+  <section class="panel" id="teacherPanel">
     <div style="display:flex;justify-content:space-between;gap:12px;align-items:start;flex-wrap:wrap">
       <div>
-        <h2>Lärarläge</h2>
-        <p>Öppna eller lås kapitel. Kapitel 1 är alltid öppet.</p>
+        <h2 style="margin:0 0 5px">Lärarläge</h2>
+        <div class="small">Öppna de kapitel eleverna ska få arbeta med.</div>
       </div>
-      <button class="btn secondary" onclick="teacherPanel.classList.remove('show')">Stäng</button>
+      <button class="btn secondary" id="closeTeacher">Stäng</button>
     </div>
     <div id="teacherRows"></div>
   </section>
-
-  <div class="section-title">
-    <div>
-      <h2>Kapitel</h2>
-      <p>Välj det kapitel som är öppet för dig.</p>
-    </div>
-  </div>
 
   <section class="grid" id="chapterGrid"></section>
 </div>
@@ -267,11 +80,11 @@ button{font:inherit;cursor:pointer}
 <div class="modal" id="modal">
   <div class="modalbox">
     <h3>Lärarläge</h3>
-    <div class="small">PIN i prototypen: 2468</div>
+    <div class="small">PIN: 2468</div>
     <input id="pin" type="password" placeholder="Skriv PIN-kod">
-    <div style="display:flex;gap:10px">
+    <div class="actions">
       <button class="btn" id="pinOk">Öppna</button>
-      <button class="btn secondary" onclick="modal.classList.remove('show')">Avbryt</button>
+      <button class="btn secondary" id="pinCancel">Avbryt</button>
     </div>
     <div id="msg" class="small" style="margin-top:10px"></div>
   </div>
@@ -279,128 +92,99 @@ button{font:inherit;cursor:pointer}
 
 <script>
 const chapters=[
- {id:1,title:"Taluppfattning",desc:"Förstå tal, platsvärde, avrundning och negativa tal.",skills:["positionssystem","utvecklad form","avrundning"]},
- {id:2,title:"Addition och subtraktion",desc:"Träna huvudräkning, skriftliga metoder och problemlösning.",skills:["huvudräkning","uppställning","rimlighet"]},
- {id:3,title:"Multiplikation",desc:"Träna tabeller, strategier och multiplikation med större tal.",skills:["tabeller","strategier","textuppgifter"]},
- {id:4,title:"Division",desc:"Förstå delning, kort division, rest och samband.",skills:["delning","kort division","rest"]},
- {id:5,title:"Bråk",desc:"Arbeta med delar av helhet, likvärdiga bråk och beräkningar.",skills:["täljare","nämnare","jämföra bråk"]},
- {id:6,title:"Decimaltal",desc:"Träna tiondelar, hundradelar och beräkningar.",skills:["platsvärde","jämföra","beräkna"]},
- {id:7,title:"Procent",desc:"Förstå procent och kopplingen mellan bråk, decimal och procent.",skills:["25 %","50 %","75 %"]},
- {id:8,title:"Algebra",desc:"Mönster, variabler, uttryck och enkla ekvationer.",skills:["mönster","x","ekvationer"]},
- {id:9,title:"Geometri",desc:"Vinklar, omkrets, area, symmetri och skala.",skills:["vinklar","area","omkrets"]},
- {id:10,title:"Mätning",desc:"Längd, massa, volym, tid och enhetsomvandling.",skills:["längd","massa","volym"]},
- {id:11,title:"Statistik och sannolikhet",desc:"Tabeller, diagram, medelvärde och sannolikhet.",skills:["diagram","medelvärde","sannolikhet"]},
- {id:12,title:"Problemlösning",desc:"Förstå problem, välja strategi och förklara lösningar.",skills:["strategier","rimlighet","resonemang"]}
+ {id:1,title:"Taluppfattning",file:"taluppfattning.html",desc:"Positionssystem, utvecklad form, jämföra tal, avrundning och negativa tal.",skills:["positionssystem","avrundning","negativa tal"]},
+ {id:2,title:"Addition och subtraktion",file:"addition-subtraktion.html",desc:"Huvudräkning, skriftliga metoder, överslag och problemlösning.",skills:["huvudräkning","uppställning","rimlighet"]},
+ {id:3,title:"Multiplikation",file:"multiplikation.html",desc:"Tabeller, strategier, större tal och problemlösning.",skills:["tabeller","strategier","textuppgifter"]},
+ {id:4,title:"Division",file:"division.html",desc:"Delning, grupper, kort division och rest.",skills:["delning","kort division","rest"]},
+ {id:5,title:"Bråk",file:"brak.html",desc:"Del av helhet, likvärdiga bråk, jämförelse och beräkningar.",skills:["täljare","nämnare","likvärdiga bråk"]},
+ {id:6,title:"Decimaltal",file:"decimaltal.html",desc:"Tiondelar, hundradelar, jämförelse och beräkningar.",skills:["platsvärde","jämföra","beräkna"]},
+ {id:7,title:"Procent",file:"procent.html",desc:"Hundradelar, procent av tal, rabatt och samband.",skills:["25 %","50 %","75 %"]},
+ {id:8,title:"Algebra",file:"algebra.html",desc:"Mönster, variabler, uttryck och enkla ekvationer.",skills:["mönster","variabler","ekvationer"]},
+ {id:9,title:"Geometri",file:"geometri.html",desc:"Vinklar, omkrets, area, symmetri och skala.",skills:["vinklar","area","omkrets"]},
+ {id:10,title:"Mätning",file:"",desc:"Längd, massa, volym, tid och enhetsomvandling.",skills:["längd","massa","volym"]},
+ {id:11,title:"Statistik och sannolikhet",file:"",desc:"Tabeller, diagram, medelvärde och sannolikhet.",skills:["diagram","medelvärde","sannolikhet"]},
+ {id:12,title:"Problemlösning",file:"",desc:"Förstå problem, välja strategi och förklara lösningar.",skills:["strategier","rimlighet","resonemang"]}
 ];
 
-const key="matterson-start-v1";
-let state=JSON.parse(localStorage.getItem(key)||'{"open":{"1":true},"progress":{}}');
-state.open={1:true,...(state.open||{})};
-state.progress=state.progress||{};
+const KEY="matterson-open-v2";
+let openState={1:true};
 
-function save(){localStorage.setItem(key,JSON.stringify(state));render()}
-function pct(id){return state.progress[id]||0}
+try{
+  const saved=JSON.parse(localStorage.getItem(KEY)||"{}");
+  openState={1:true,...saved};
+}catch(e){
+  openState={1:true};
+}
+
+function saveState(){
+  localStorage.setItem(KEY,JSON.stringify(openState));
+  render();
+}
 
 function render(){
   chapterGrid.innerHTML=chapters.map(c=>{
-    const open=!!state.open[c.id], p=pct(c.id);
-    return `<article class="card ${open?"":"locked"}">
-      <span class="badge ${open?"":"lock"}">${open?"● Öppet":"🔒 Låst"}</span>
-      <h3>Kapitel ${c.id}: ${c.title}</h3>
+    const open=c.id===1 || !!openState[c.id];
+    const built=!!c.file;
+    const canOpen=open && built;
+
+    return `<article class="card ${canOpen?"":"locked"}">
+      <span class="badge ${canOpen?"":"lock"}">${canOpen?"● Öppet":"🔒 Låst"}</span>
+      <h2>Kapitel ${c.id}: ${c.title}</h2>
       <p>${c.desc}</p>
       <div class="skills">${c.skills.map(s=>`<span>${s}</span>`).join("")}</div>
-      <div class="progress"><i style="width:${p}%"></i></div>
       <footer>
-        <span class="small">${p}% klart</span>
-        <button class="btn ${open?"":"secondary"}" ${open?"":"disabled"} onclick="openChapter(${c.id})">${open?"Starta":"Låst"}</button>
+        <span class="small">${built?"":"Byggs snart"}</span>
+        ${canOpen
+          ? `<a class="btn" href="${c.file}">Starta</a>`
+          : `<span class="btn secondary" style="cursor:default">Låst</span>`}
       </footer>
-    </article>`
+    </article>`;
   }).join("");
 
   teacherRows.innerHTML=chapters.map(c=>{
-    const open=!!state.open[c.id];
+    const open=c.id===1 || !!openState[c.id];
+    const built=!!c.file;
     return `<div class="trow">
-      <div><strong>Kapitel ${c.id}: ${c.title}</strong><div class="small">${pct(c.id)}% klart</div></div>
-      <button class="switch ${open?"on":""}" onclick="toggle(${c.id})"></button>
-      <div class="small">${open?"Öppet":"Låst"}</div>
-    </div>`
+      <div>
+        <strong>Kapitel ${c.id}: ${c.title}</strong>
+        <div class="small">${built?"Kapitelsidan finns":"Kapitelsidan byggs snart"}</div>
+      </div>
+      ${c.id===1
+        ? `<span class="badge">Alltid öppet</span>`
+        : `<button class="switch ${open?"on":""}" onclick="toggleChapter(${c.id})" aria-label="Öppna eller lås kapitel ${c.id}"></button>`}
+      <span class="small">${open?"Öppet":"Låst"}</span>
+    </div>`;
   }).join("");
-
-  openCount.textContent=chapters.filter(c=>state.open[c.id]).length;
-  doneCount.textContent=chapters.filter(c=>pct(c.id)>=100).length;
-  const current=chapters.find(c=>state.open[c.id]&&pct(c.id)<100)||chapters.find(c=>state.open[c.id])||chapters[0];
-  currentText.textContent=`Kapitel ${current.id}: ${current.title}`;
 }
 
-function toggle(id){
+function toggleChapter(id){
   if(id===1)return;
-  state.open[id]=!state.open[id];
-  save()
-}
-function startJourney(){
-  const current=chapters.find(c=>state.open[c.id]&&pct(c.id)<100)||chapters.find(c=>state.open[c.id])||chapters[0];
-  openChapter(current.id)
-}
-function openChapter(id){
-  if(!state.open[id]) return;
-
-  if(id === 1){
-    location.href = "taluppfattning.html";
-    return;
-  }
-
-  if(id === 2){
-    location.href = "addition-subtraktion.html";
-    return;
-  }
-
-  if(id === 3){
-    location.href = "multiplikation.html";
-    return;
-  }
-
-  if(id === 4){
-    location.href = "division.html";
-    return;
-  }
-
-  if(id === 5){
-    location.href = "brak.html";
-    return;
-  }
-
-  if(id === 6){
-    location.href = "decimaltal.html";
-    return;
-  }
-
-  if(id === 7){
-    location.href = "procent.html";
-    return;
-  }
-
-  if(id === 8){
-    location.href = "algebra.html";
-    return;
-  }
-
-  if(id === 9){
-    location.href = "geometri.html";
-    return;
-  }
-
-  alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
+  openState[id]=!openState[id];
+  saveState();
 }
 
-teacherBtn.onclick=()=>{modal.classList.add("show");pin.value="";msg.textContent=""}
+teacherBtn.onclick=()=>{
+  modal.classList.add("show");
+  pin.value="";
+  msg.textContent="";
+  setTimeout(()=>pin.focus(),50);
+};
+
+pinCancel.onclick=()=>modal.classList.remove("show");
+
 pinOk.onclick=()=>{
- if(pin.value==="2468"){
-   modal.classList.remove("show");
-   teacherPanel.classList.add("show");
-   teacherPanel.scrollIntoView({behavior:"smooth"})
- }else msg.textContent="Fel PIN-kod."
-}
-render()
+  if(pin.value==="2468"){
+    modal.classList.remove("show");
+    teacherPanel.classList.add("show");
+    teacherPanel.scrollIntoView({behavior:"smooth",block:"start"});
+  }else{
+    msg.textContent="Fel PIN-kod.";
+  }
+};
+
+closeTeacher.onclick=()=>teacherPanel.classList.remove("show");
+
+render();
 </script>
 </body>
 </html>
