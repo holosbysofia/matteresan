@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="sv">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Geometri – MatteResan</title>
+<style>
+:root{
+  --bg:#f4efe4;--paper:#fffdf8;--green:#1f4b36;--green2:#e3ede5;--text:#173629;
+  --muted:#6d786f;--line:#d8dfd7;--gold:#f2e6b9;--shadow:0 10px 28px rgba(38,55,43,.08);
+}
+*{box-sizing:border-box}
+body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:var(--bg);color:var(--text)}
+button,input,textarea{font:inherit}button{cursor:pointer}
+.wrap{max-width:1160px;margin:auto;padding:24px}
+header{background:var(--paper);border:1px solid var(--line);border-radius:26px;padding:26px;box-shadow:var(--shadow)}
+.top{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap}
+h1{margin:4px 0 5px;font-size:clamp(32px,5vw,52px)}
+.subtitle{color:var(--muted);font-size:17px}
+.btn{border:0;border-radius:14px;padding:11px 16px;font-weight:800;background:var(--green);color:#fff}
+.btn.secondary{background:var(--green2);color:var(--green);border:1px solid var(--line)}
+.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}
+.badge{display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--green2);font-size:13px;font-weight:800}
+.progress-wrap{margin-top:18px}.progress{height:12px;background:#e8ece7;border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--green);width:0}
+.progress-text{font-size:13px;color:var(--muted);margin-top:5px}
+.notice{margin:16px 0;background:var(--gold);border:1px solid #dfcd8c;border-radius:16px;padding:13px 15px;color:#63531e}
+.sections{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:18px}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow)}
+.card.locked{opacity:.52}.card h2{font-size:22px;margin:10px 0 6px}.card p{margin:0;color:var(--muted);line-height:1.45}
+.meta{font-size:13px;color:var(--muted);margin-top:8px}
+.work{display:none;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)}.work.show{display:block}
+.example{background:#f7f3ea;border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0}
+.q{background:#f8f5ed;border:1px solid #e8e2d6;border-radius:14px;padding:13px;margin:11px 0}
+.q strong{display:block;margin-bottom:8px}
+.answer{display:grid;grid-template-columns:1fr auto;gap:8px}
+.answer input{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.feedback{font-size:14px;font-weight:800;margin-top:7px}.ok{color:#21643b}.no{color:#9b3636}
+textarea{width:100%;min-height:110px;padding:11px;border:1px solid var(--line);border-radius:12px;background:#fff}
+.footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+@media(max-width:780px){.sections{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="top">
+    <div>
+      <span class="badge">MatteResan · Kapitel 9</span>
+      <h1>Geometri</h1>
+      <div class="subtitle">Vinklar · omkrets · area · symmetri · skala</div>
+    </div>
+    <div class="footer-actions">
+      <button class="btn secondary" onclick="location.href='index.html'">← Till MatteResan</button>
+      <button class="btn ghost" onclick="resetChapter()">Nollställ kapitlet</button>
+    </div>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress"><i id="bar"></i></div>
+    <div class="progress-text" id="progressText">0 % klart</div>
+  </div>
+</header>
+
+<div class="notice">Gör delarna i ordning. Nästa del öppnas först när föregående del är klar.</div>
+<section class="sections" id="sections"></section>
+</div>
+
+<script>
+const STORE="matterson-geometri-v1";
+const parts=[
+ {key:"angles",title:"1. Vinklar",desc:"Träna räta, spetsiga och trubbiga vinklar."},
+ {key:"perimeter",title:"2. Omkrets",desc:"Beräkna längden runt figurer."},
+ {key:"area",title:"3. Area",desc:"Beräkna area av rektanglar och kvadrater."},
+ {key:"symmetry",title:"4. Symmetri",desc:"Förstå symmetrilinjer och symmetriska figurer."},
+ {key:"scale",title:"5. Skala",desc:"Träna enkla uppgifter med förstoring och förminskning."},
+ {key:"reason",title:"6. Resonera",desc:"Förklara geometriska samband.",kind:"text"},
+ {key:"problem",title:"7. Problemlösning",desc:"Lös två större geometriproblem.",kind:"text"},
+ {key:"check",title:"8. Kapitelkoll",desc:"15 blandade uppgifter. Minst 80 % rätt krävs."}
+];
+let state;
+try{state=JSON.parse(localStorage.getItem(STORE))||{done:{},scores:{}}}catch(e){state={done:{},scores:{}}}
+state.done=state.done||{};state.scores=state.scores||{};
+
+function save(){localStorage.setItem(STORE,JSON.stringify(state));render();syncMainProgress()}
+function syncMainProgress(){
+  try{
+    const mainKey="matterson-start-v1";
+    let s=JSON.parse(localStorage.getItem(mainKey)||'{"open":{"1":true},"progress":{}}');
+    s.progress=s.progress||{};
+    s.progress[9]=Math.round(parts.filter(p=>state.done[p.key]).length/parts.length*100);
+    localStorage.setItem(mainKey,JSON.stringify(s));
+  }catch(e){}
+}
+function unlocked(i){if(i===0)return true;return !!state.done[parts[i-1].key]}
+function progress(){return Math.round(parts.filter(p=>state.done[p.key]).length/parts.length*100)}
+function render(){
+  const p=progress();bar.style.width=p+"%";progressText.textContent=p+" % klart";
+  sections.innerHTML=parts.map((part,i)=>{
+    const u=unlocked(i),d=!!state.done[part.key],score=state.scores[part.key];
+    return `<article class="card ${u?"":"locked"}">
+      <span class="badge">${d?"✓ Klar":u?"Öppen":"🔒 Låst"}</span>
+      <h2>${part.title}</h2><p>${part.desc}</p>
+      <div class="meta">${score!==undefined?`Senaste resultat: ${score} %`:""}</div>
+      <div style="margin-top:12px">${u?`<button class="btn ${d?"secondary":""}" onclick="openPart('${part.key}')">${d?"Träna igen":"Starta"}</button>`:`<span class="meta">Gör föregående del först.</span>`}</div>
+      <div class="work" id="work-${part.key}"></div>
+    </article>`;
+  }).join("")
+}
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function choice(a){return a[Math.floor(Math.random()*a.length)]}
+function norm(x){return String(x).trim().toLowerCase().replace(/\s+/g,"").replace(".",",")}
+
+function qAngles(){
+  const t=rand(1,4);
+  if(t===1)return ["Hur många grader är en rät vinkel?","90"]
+  if(t===2)return ["Hur många grader är ett helt varv?","360"]
+  if(t===3)return ["Hur många grader är ett halvt varv?","180"]
+  const a=choice([30,45,60,120,135,150]);
+  const type=a<90?"spetsig":"trubbig";
+  return [`Är en vinkel på ${a}° spetsig eller trubbig?`,type]
+}
+function qPerimeter(){
+  const a=rand(3,20),b=rand(2,15);
+  if(Math.random()<.5)return [`En rektangel är ${a} cm lång och ${b} cm bred. Vad är omkretsen?`,String(2*a+2*b)]
+  const s=rand(2,15);return [`En kvadrat har sidan ${s} cm. Vad är omkretsen?`,String(4*s)]
+}
+function qArea(){
+  const a=rand(3,20),b=rand(2,15);
+  if(Math.random()<.5)return [`En rektangel är ${a} cm lång och ${b} cm bred. Vad är arean?`,String(a*b)]
+  const s=rand(2,15);return [`En kvadrat har sidan ${s} cm. Vad är arean?`,String(s*s)]
+}
+function qSymmetry(){
+  const items=[["kvadrat","4"],["rektangel","2"],["liksidig triangel","3"]];
+  const p=choice(items);
+  return [`Hur många symmetrilinjer har en ${p[0]}?`,p[1]]
+}
+function qScale(){
+  const t=rand(1,2),n=rand(2,20);
+  if(t===1)return [`En sträcka är ${n} cm och förstoras i skala 2:1. Hur lång blir den?`,String(n*2)]
+  return [`En sträcka är ${n*2} cm i en bild med skala 1:2. Hur lång är den i verkligheten?`,String(n)]
+}
+function qMixed(){return choice([qAngles,qPerimeter,qArea,qSymmetry,qScale])()}
+
+let current={};
+function openPart(key){
+  const el=document.getElementById("work-"+key);el.classList.add("show");
+
+  if(key==="reason"){
+    el.innerHTML=`<div class="q"><strong>1. Förklara</strong>
+    <p>Vad är skillnaden mellan omkrets och area?</p>
+    <textarea id="r1" placeholder="Förklara med egna ord..."></textarea></div>
+    <div class="q"><strong>2. Enheter</strong>
+    <p>Varför skrivs area i till exempel cm² men omkrets i cm?</p>
+    <textarea id="r2" placeholder="Förklara sambandet mellan längd och yta..."></textarea></div>
+    <button class="btn" onclick="finishText('reason',['r1','r2'])">Spara mina svar</button>
+    <div id="msg-reason" class="feedback"></div>`;return
+  }
+
+  if(key==="problem"){
+    el.innerHTML=`<div class="q"><strong>Problem 1</strong>
+    <p>En rektangulär skolgård är 35 m lång och 18 m bred. Bestäm både omkrets och area.</p>
+    <textarea id="p1" placeholder="Visa båda beräkningarna..."></textarea></div>
+    <div class="q"><strong>Problem 2</strong>
+    <p>En kvadrat har omkretsen 48 cm. Hur lång är en sida och vilken area har kvadraten?</p>
+    <textarea id="p2" placeholder="Visa hur du tänker..."></textarea></div>
+    <button class="btn" onclick="finishText('problem',['p1','p2'])">Lämna problemlösning</button>
+    <div id="msg-problem" class="feedback"></div>`;return
+  }
+
+  let gen,count=12;
+  if(key==="angles")gen=qAngles;
+  if(key==="perimeter")gen=qPerimeter;
+  if(key==="area")gen=qArea;
+  if(key==="symmetry")gen=qSymmetry;
+  if(key==="scale")gen=qScale;
+  if(key==="check"){gen=qMixed;count=15}
+
+  const qs=Array.from({length:count},()=>gen());
+  current[key]=qs;
+
+  el.innerHTML=`<div class="example">${
+    key==="angles"?"Rät vinkel = 90°. Spetsig är mindre än 90°, trubbig är större än 90° men mindre än 180°.":
+    key==="perimeter"?"Omkrets är längden runt figuren.":
+    key==="area"?"Area beskriver ytan inuti figuren.":
+    key==="symmetry"?"En symmetrilinje delar en figur i två spegelvända halvor.":
+    key==="scale"?"Skala visar hur mycket något har förstorats eller förminskats.":
+    "Kapitelkollen blandar alla delar."
+  }</div>
+  ${qs.map((q,i)=>`<div class="q"><strong>${i+1}. ${q[0]}</strong>
+  <div class="answer"><input id="${key}-${i}" autocomplete="off">
+  <button class="btn secondary" onclick="checkOne('${key}',${i})">Kontrollera</button></div>
+  <div class="feedback" id="fb-${key}-${i}"></div></div>`).join("")}
+  <div class="footer-actions">
+    <button class="btn" onclick="finishQuiz('${key}')">Rätta hela delen</button>
+    <button class="btn secondary" onclick="openPart('${key}')">Ny omgång</button>
+  </div>
+  <div id="score-${key}" class="feedback"></div>`
+}
+function checkOne(key,i){
+  const q=current[key][i],v=norm(document.getElementById(`${key}-${i}`).value),fb=document.getElementById(`fb-${key}-${i}`);
+  const ok=v===norm(q[1]);fb.textContent=ok?"Rätt!":"Försök igen.";fb.className="feedback "+(ok?"ok":"no")
+}
+function finishQuiz(key){
+  const qs=current[key];let r=0;
+  qs.forEach((q,i)=>{if(norm(document.getElementById(`${key}-${i}`).value)===norm(q[1]))r++});
+  const pct=Math.round(r/qs.length*100);state.scores[key]=pct;const msg=document.getElementById("score-"+key);
+  if(pct>=80){
+    state.done[key]=true;msg.textContent=`${r} av ${qs.length} rätt (${pct} %). Delen är klar!`;msg.className="feedback ok";
+    localStorage.setItem(STORE,JSON.stringify(state));syncMainProgress();setTimeout(()=>render(),450)
+  }else{
+    msg.textContent=`${r} av ${qs.length} rätt (${pct} %). Du behöver minst 80 %. Träna vidare och försök igen.`;msg.className="feedback no";
+    localStorage.setItem(STORE,JSON.stringify(state))
+  }
+}
+function finishText(key,ids){
+  const vals=ids.map(id=>document.getElementById(id).value.trim()),msg=document.getElementById("msg-"+key);
+  if(vals.some(v=>v.length<30)){msg.textContent="Utveckla båda svaren så att ditt matematiska tänkande syns.";msg.className="feedback no";return}
+  state.done[key]=true;msg.textContent="Svaren är sparade. Delen är klar.";msg.className="feedback ok";save()
+}
+function resetChapter(){
+  if(confirm("Vill du nollställa hela Kapitel 9?")){state={done:{},scores:{}};localStorage.removeItem(STORE);save()}
+}
+render();syncMainProgress();
+</script>
+</body>
+</html>
