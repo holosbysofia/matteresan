@@ -374,6 +374,11 @@ function openChapter(id){
     return;
   }
 
+  if(id === 7){
+    location.href = "procent.html";
+    return;
+  }
+
   alert(`Kapitel ${id}: ${chapters.find(c=>c.id===id).title} byggs snart.`);
 }
 
