@@ -3,365 +3,358 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taluppfattning – MatteResan</title>
+<title>MatteResan – träna matematik åk 4–6</title>
 <style>
 :root{
-  --bg:#f4efe4;
+  --sand:#f3eee4;
   --paper:#fffdf8;
   --green:#1f4b36;
-  --green2:#e3ede5;
+  --green2:#dfeadf;
   --text:#173629;
-  --muted:#6d786f;
-  --line:#d8dfd7;
+  --muted:#6e786f;
+  --line:#d9dfd7;
   --gold:#f2e6b9;
-  --ok:#dff1e4;
-  --bad:#f6dddd;
   --shadow:0 10px 28px rgba(38,55,43,.08);
 }
 *{box-sizing:border-box}
 body{
   margin:0;
   font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-  background:var(--bg);
+  background:var(--sand);
   color:var(--text);
 }
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.wrap{max-width:1160px;margin:auto;padding:24px}
-header{
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1200px;margin:auto;padding:24px}
+.hero{
   background:var(--paper);
   border:1px solid var(--line);
-  border-radius:26px;
-  padding:26px;
+  border-radius:28px;
+  padding:32px;
+  box-shadow:var(--shadow);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+  flex-wrap:wrap;
+}
+.brand h1{
+  margin:0;
+  font-size:clamp(38px,6vw,66px);
+  letter-spacing:-1px;
+}
+.brand .tag{
+  margin-top:8px;
+  font-size:19px;
+  color:var(--muted);
+}
+.brand .sub{
+  margin-top:14px;
+  max-width:650px;
+  line-height:1.5;
+}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap}
+.btn{
+  border:0;
+  border-radius:14px;
+  padding:12px 17px;
+  font-weight:800;
+  background:var(--green);
+  color:#fff;
+}
+.btn.secondary{
+  background:var(--green2);
+  color:var(--green);
+  border:1px solid var(--line);
+}
+.notice{
+  background:var(--gold);
+  border:1px solid #e3d18c;
+  border-radius:17px;
+  padding:14px 16px;
+  margin:18px 0;
+  color:#65551e;
+}
+.topgrid{
+  display:grid;
+  grid-template-columns:2fr 1fr 1fr;
+  gap:14px;
+  margin-bottom:18px;
+}
+.box{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:18px;
   box-shadow:var(--shadow);
 }
-.top{
-  display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap
+.box strong{display:block;font-size:28px}
+.box span{color:var(--muted);font-size:14px}
+.section-title{
+  display:flex;
+  justify-content:space-between;
+  align-items:end;
+  gap:12px;
+  flex-wrap:wrap;
+  margin:24px 0 12px;
 }
-h1{margin:4px 0 5px;font-size:clamp(32px,5vw,52px)}
-.subtitle{color:var(--muted);font-size:17px}
-.btn{
-  border:0;border-radius:14px;padding:11px 16px;font-weight:800;
-  background:var(--green);color:white
-}
-.btn.secondary{background:var(--green2);color:var(--green);border:1px solid var(--line)}
-.btn.ghost{background:transparent;color:var(--green);border:1px solid var(--line)}
-.badge{
-  display:inline-flex;padding:6px 10px;border-radius:999px;background:var(--green2);
-  font-size:13px;font-weight:800
-}
-.progress-wrap{margin-top:18px}
-.progress{
-  height:12px;background:#e8ece7;border-radius:999px;overflow:hidden
-}
-.progress i{display:block;height:100%;background:var(--green);width:0}
-.progress-text{font-size:13px;color:var(--muted);margin-top:5px}
-.notice{
-  margin:16px 0;background:var(--gold);border:1px solid #dfcd8c;border-radius:16px;
-  padding:13px 15px;color:#63531e
-}
-.sections{
+.section-title h2{margin:0;font-size:28px}
+.section-title p{margin:0;color:var(--muted)}
+.grid{
   display:grid;
-  grid-template-columns:repeat(2,minmax(0,1fr));
+  grid-template-columns:repeat(3,minmax(0,1fr));
   gap:16px;
-  margin-top:18px
 }
 .card{
-  background:var(--paper);border:1px solid var(--line);border-radius:22px;padding:18px;
-  box-shadow:var(--shadow)
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:18px;
+  box-shadow:var(--shadow);
+  min-height:220px;
 }
-.card.locked{opacity:.52}
-.card h2{font-size:22px;margin:10px 0 6px}
+.card.locked{opacity:.63}
+.badge{
+  display:inline-flex;
+  border-radius:999px;
+  padding:6px 10px;
+  font-size:12px;
+  font-weight:800;
+  background:var(--green2);
+}
+.badge.lock{background:#ebe9e3;color:#666}
+.card h3{margin:14px 0 6px;font-size:21px}
 .card p{margin:0;color:var(--muted);line-height:1.45}
-.meta{font-size:13px;color:var(--muted);margin-top:8px}
-.work{
-  display:none;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line)
+.skills{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.skills span{
+  background:#f7f3ea;
+  border:1px solid var(--line);
+  border-radius:999px;
+  padding:5px 8px;
+  font-size:12px;
 }
-.work.show{display:block}
-.example{
-  background:#f7f3ea;border:1px solid var(--line);border-radius:14px;padding:13px;margin:10px 0
+.card footer{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  margin-top:16px;
 }
-.q{
-  background:#f8f5ed;border:1px solid #e8e2d6;border-radius:14px;padding:13px;margin:11px 0
+.progress{
+  height:8px;
+  background:#e8ece6;
+  border-radius:999px;
+  overflow:hidden;
+  margin-top:14px;
 }
-.q strong{display:block;margin-bottom:8px}
-.answer{display:grid;grid-template-columns:1fr auto;gap:8px}
-.answer input{
-  width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;background:white
+.progress i{display:block;height:100%;background:var(--green)}
+.teacher{
+  display:none;
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:20px;
+  margin:18px 0;
+  box-shadow:var(--shadow);
 }
-.feedback{font-size:14px;font-weight:800;margin-top:7px}
-.ok{color:#21643b}.no{color:#9b3636}
-textarea{
-  width:100%;min-height:110px;padding:11px;border:1px solid var(--line);border-radius:12px;background:white
+.teacher.show{display:block}
+.teacher h2{margin:0 0 6px}
+.teacher p{margin:0 0 14px;color:var(--muted)}
+.trow{
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:12px;
+  align-items:center;
+  border-top:1px solid var(--line);
+  padding:12px 0;
 }
-.footer-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-@media(max-width:780px){.sections{grid-template-columns:1fr}}
+.switch{
+  width:48px;height:28px;border:0;border-radius:999px;background:#c9c8c1;padding:3px;
+}
+.switch:before{
+  content:"";
+  display:block;width:22px;height:22px;border-radius:50%;background:#fff;transition:.2s;
+}
+.switch.on{background:var(--green)}
+.switch.on:before{transform:translateX(20px)}
+.small{font-size:13px;color:var(--muted)}
+.modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.38);
+  display:none;align-items:center;justify-content:center;padding:20px;
+}
+.modal.show{display:flex}
+.modalbox{
+  width:min(480px,100%);
+  background:var(--paper);
+  border-radius:22px;
+  padding:22px;
+}
+.modalbox input{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  margin:8px 0 12px;
+}
+@media(max-width:900px){
+  .grid{grid-template-columns:1fr 1fr}
+  .topgrid{grid-template-columns:1fr 1fr}
+  .topgrid .box:first-child{grid-column:1/-1}
+}
+@media(max-width:620px){
+  .grid{grid-template-columns:1fr}
+  .topgrid{grid-template-columns:1fr}
+  .topgrid .box:first-child{grid-column:auto}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <div class="top">
+  <section class="hero">
+    <div class="brand">
+      <h1>MatteResan</h1>
+      <div class="tag">Träna matematik. Klara ett område. Gå vidare till nästa.</div>
+      <div class="sub">
+        Här tränar du matematik steg för steg. Du arbetar klart ett område i taget.
+        Din lärare bestämmer när nästa kapitel öppnas.
+      </div>
+    </div>
+    <div class="hero-actions">
+      <button class="btn" onclick="startJourney()">Fortsätt min resa</button>
+      <button class="btn secondary" id="teacherBtn">Lärarläge</button>
+    </div>
+  </section>
+
+  <div class="notice">
+    Du behöver göra färdigt det kapitel du arbetar med innan du går vidare. Nästa kapitel öppnas av läraren.
+  </div>
+
+  <section class="topgrid">
+    <div class="box">
+      <strong id="currentText">Kapitel 1</strong>
+      <span>du arbetar med just nu</span>
+    </div>
+    <div class="box">
+      <strong id="doneCount">0</strong>
+      <span>färdiga kapitel</span>
+    </div>
+    <div class="box">
+      <strong id="openCount">1</strong>
+      <span>öppna kapitel</span>
+    </div>
+  </section>
+
+  <section class="teacher" id="teacherPanel">
+    <div style="display:flex;justify-content:space-between;gap:12px;align-items:start;flex-wrap:wrap">
+      <div>
+        <h2>Lärarläge</h2>
+        <p>Öppna eller lås kapitel. Kapitel 1 är alltid öppet.</p>
+      </div>
+      <button class="btn secondary" onclick="teacherPanel.classList.remove('show')">Stäng</button>
+    </div>
+    <div id="teacherRows"></div>
+  </section>
+
+  <div class="section-title">
     <div>
-      <span class="badge">MatteResan · Kapitel 1</span>
-      <h1>Taluppfattning</h1>
-      <div class="subtitle">Positionssystem · utvecklad form · jämföra tal · avrundning · negativa tal</div>
-    </div>
-    <div class="footer-actions">
-      <button class="btn secondary" onclick="location.href='index.html'">← Till MatteResan</button>
-      <button class="btn ghost" onclick="resetChapter()">Nollställ kapitlet</button>
+      <h2>Kapitel</h2>
+      <p>Välj det kapitel som är öppet för dig.</p>
     </div>
   </div>
 
-  <div class="progress-wrap">
-    <div class="progress"><i id="bar"></i></div>
-    <div class="progress-text" id="progressText">0 % klart</div>
-  </div>
-</header>
-
-<div class="notice">
-  Gör delarna i ordning. Nästa del öppnas först när föregående del är klar.
+  <section class="grid" id="chapterGrid"></section>
 </div>
 
-<section class="sections" id="sections"></section>
+<div class="modal" id="modal">
+  <div class="modalbox">
+    <h3>Lärarläge</h3>
+    <div class="small">PIN i prototypen: 2468</div>
+    <input id="pin" type="password" placeholder="Skriv PIN-kod">
+    <div style="display:flex;gap:10px">
+      <button class="btn" id="pinOk">Öppna</button>
+      <button class="btn secondary" onclick="modal.classList.remove('show')">Avbryt</button>
+    </div>
+    <div id="msg" class="small" style="margin-top:10px"></div>
+  </div>
 </div>
 
 <script>
-const STORE="matterson-taluppfattning-v1";
-
-const parts=[
- {key:"position",title:"1. Positionssystem",desc:"Förstå ental, tiotal, hundratal, tusental och större tal.",kind:"quiz"},
- {key:"expanded",title:"2. Utvecklad form",desc:"Dela upp tal efter siffrornas platsvärde.",kind:"quiz"},
- {key:"compare",title:"3. Jämföra och ordna tal",desc:"Bestäm vilket tal som är störst, minst och placera tal i ordning.",kind:"quiz"},
- {key:"round",title:"4. Avrundning",desc:"Avrunda till närmaste tiotal, hundratal och tusental.",kind:"quiz"},
- {key:"negative",title:"5. Negativa tal",desc:"Träna på tallinjen, temperatur och tal under noll.",kind:"quiz"},
- {key:"reason",title:"6. Resonera",desc:"Förklara hur du tänker med matematiska begrepp.",kind:"text"},
- {key:"problem",title:"7. Problemlösning",desc:"Använd taluppfattning i två större problem.",kind:"text"},
- {key:"check",title:"8. Kapitelkoll",desc:"15 blandade uppgifter. Minst 80 % rätt krävs.",kind:"check"}
+const chapters=[
+ {id:1,title:"Taluppfattning",desc:"Förstå tal, platsvärde, avrundning och negativa tal.",skills:["positionssystem","utvecklad form","avrundning"]},
+ {id:2,title:"Addition och subtraktion",desc:"Träna huvudräkning, skriftliga metoder och problemlösning.",skills:["huvudräkning","uppställning","rimlighet"]},
+ {id:3,title:"Multiplikation",desc:"Träna tabeller, strategier och multiplikation med större tal.",skills:["tabeller","strategier","textuppgifter"]},
+ {id:4,title:"Division",desc:"Förstå delning, kort division, rest och samband.",skills:["delning","kort division","rest"]},
+ {id:5,title:"Bråk",desc:"Arbeta med delar av helhet, likvärdiga bråk och beräkningar.",skills:["täljare","nämnare","jämföra bråk"]},
+ {id:6,title:"Decimaltal",desc:"Träna tiondelar, hundradelar och beräkningar.",skills:["platsvärde","jämföra","beräkna"]},
+ {id:7,title:"Procent",desc:"Förstå procent och kopplingen mellan bråk, decimal och procent.",skills:["25 %","50 %","75 %"]},
+ {id:8,title:"Algebra",desc:"Mönster, variabler, uttryck och enkla ekvationer.",skills:["mönster","x","ekvationer"]},
+ {id:9,title:"Geometri",desc:"Vinklar, omkrets, area, symmetri och skala.",skills:["vinklar","area","omkrets"]},
+ {id:10,title:"Mätning",desc:"Längd, massa, volym, tid och enhetsomvandling.",skills:["längd","massa","volym"]},
+ {id:11,title:"Statistik och sannolikhet",desc:"Tabeller, diagram, medelvärde och sannolikhet.",skills:["diagram","medelvärde","sannolikhet"]},
+ {id:12,title:"Problemlösning",desc:"Förstå problem, välja strategi och förklara lösningar.",skills:["strategier","rimlighet","resonemang"]}
 ];
 
-let state;
-try{
-  state=JSON.parse(localStorage.getItem(STORE))||{done:{},scores:{}};
-}catch(e){state={done:{},scores:{}}}
-state.done=state.done||{};
-state.scores=state.scores||{};
+const key="matterson-start-v1";
+let state=JSON.parse(localStorage.getItem(key)||'{"open":{"1":true},"progress":{}}');
+state.open={1:true,...(state.open||{})};
+state.progress=state.progress||{};
 
-function save(){
-  localStorage.setItem(STORE,JSON.stringify(state));
-  render();
-  syncMainProgress();
-}
-function syncMainProgress(){
-  try{
-    const mainKey="matterson-start-v1";
-    let s=JSON.parse(localStorage.getItem(mainKey)||'{"open":{"1":true},"progress":{}}');
-    s.progress=s.progress||{};
-    s.progress[1]=Math.round(Object.keys(state.done).filter(k=>state.done[k]).length/parts.length*100);
-    localStorage.setItem(mainKey,JSON.stringify(s));
-  }catch(e){}
-}
-function isUnlocked(index){
-  if(index===0)return true;
-  return !!state.done[parts[index-1].key];
-}
-function progress(){
-  return Math.round(parts.filter(p=>state.done[p.key]).length/parts.length*100);
-}
+function save(){localStorage.setItem(key,JSON.stringify(state));render()}
+function pct(id){return state.progress[id]||0}
+
 function render(){
-  const p=progress();
-  bar.style.width=p+"%";
-  progressText.textContent=p+" % klart";
-  sections.innerHTML=parts.map((part,i)=>{
-    const unlocked=isUnlocked(i), done=!!state.done[part.key];
-    const score=state.scores[part.key];
-    return `<article class="card ${unlocked?"":"locked"}">
-      <span class="badge">${done?"✓ Klar":unlocked?"Öppen":"🔒 Låst"}</span>
-      <h2>${part.title}</h2>
-      <p>${part.desc}</p>
-      <div class="meta">${score!==undefined?`Senaste resultat: ${score} %`:""}</div>
-      <div style="margin-top:12px">
-        ${unlocked?`<button class="btn ${done?"secondary":""}" onclick="openPart('${part.key}')">${done?"Träna igen":"Starta"}</button>`:`<span class="meta">Gör föregående del först.</span>`}
-      </div>
-      <div class="work" id="work-${part.key}"></div>
-    </article>`;
+  chapterGrid.innerHTML=chapters.map(c=>{
+    const open=!!state.open[c.id], p=pct(c.id);
+    return `<article class="card ${open?"":"locked"}">
+      <span class="badge ${open?"":"lock"}">${open?"● Öppet":"🔒 Låst"}</span>
+      <h3>Kapitel ${c.id}: ${c.title}</h3>
+      <p>${c.desc}</p>
+      <div class="skills">${c.skills.map(s=>`<span>${s}</span>`).join("")}</div>
+      <div class="progress"><i style="width:${p}%"></i></div>
+      <footer>
+        <span class="small">${p}% klart</span>
+        <button class="btn ${open?"":"secondary"}" ${open?"":"disabled"} onclick="openChapter(${c.id})">${open?"Starta":"Låst"}</button>
+      </footer>
+    </article>`
   }).join("");
-}
-function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
-function choice(arr){return arr[Math.floor(Math.random()*arr.length)]}
-function sv(n){return Number(n).toLocaleString("sv-SE")}
-function norm(x){return String(x).trim().toLowerCase().replace(/\s+/g,"").replace(".",",")}
 
-function questionPosition(){
-  const n=rand(1000,99999);
-  const places=[1,10,100,1000,10000];
-  let pow=choice(places);
-  let digit=Math.floor(n/pow)%10;
-  if(digit===0){digit=choice([1,2,3,4,5,6,7,8,9]); n += digit*pow}
-  return [`Vilket värde har siffran ${digit} i talet ${sv(n)}?`,String(digit*pow)]
-}
-function questionExpanded(){
-  const tt=rand(1,9)*10000, t=rand(0,9)*1000, h=rand(0,9)*100, ti=rand(0,9)*10, e=rand(0,9);
-  const n=tt+t+h+ti+e;
-  return [`Skriv ${sv(tt)} + ${sv(t)} + ${h} + ${ti} + ${e} som ett tal.`,String(n)]
-}
-function questionCompare(){
-  const a=rand(1000,99999),b=a+rand(1,3000);
-  const type=rand(1,2);
-  return type===1
-    ? [`Vilket tal är störst: ${sv(a)} eller ${sv(b)}?`,String(b)]
-    : [`Vilket tal är minst: ${sv(a)} eller ${sv(b)}?`,String(a)]
-}
-function questionRound(){
-  const n=rand(1000,99999);
-  const place=choice([10,100,1000]);
-  const label=place===10?"tiotal":place===100?"hundratal":"tusental";
-  const ans=Math.round(n/place)*place;
-  return [`Avrunda ${sv(n)} till närmaste ${label}.`,String(ans)]
-}
-function questionNegative(){
-  const type=rand(1,3);
-  if(type===1){
-    const n=rand(-15,10);
-    return [`Vilket tal kommer direkt efter ${n}?`,String(n+1)]
-  }
-  if(type===2){
-    const a=rand(-15,5),b=a+rand(1,10);
-    return [`Vilket tal är störst: ${a} eller ${b}?`,String(b)]
-  }
-  const start=rand(-10,0),rise=rand(1,12);
-  return [`Temperaturen är ${start} °C och stiger ${rise} grader. Vilken temperatur blir det?`,String(start+rise)]
-}
-function mixedQuestion(){
-  return choice([questionPosition,questionExpanded,questionCompare,questionRound,questionNegative])()
+  teacherRows.innerHTML=chapters.map(c=>{
+    const open=!!state.open[c.id];
+    return `<div class="trow">
+      <div><strong>Kapitel ${c.id}: ${c.title}</strong><div class="small">${pct(c.id)}% klart</div></div>
+      <button class="switch ${open?"on":""}" onclick="toggle(${c.id})"></button>
+      <div class="small">${open?"Öppet":"Låst"}</div>
+    </div>`
+  }).join("");
+
+  openCount.textContent=chapters.filter(c=>state.open[c.id]).length;
+  doneCount.textContent=chapters.filter(c=>pct(c.id)>=100).length;
+  const current=chapters.find(c=>state.open[c.id]&&pct(c.id)<100)||chapters.find(c=>state.open[c.id])||chapters[0];
+  currentText.textContent=`Kapitel ${current.id}: ${current.title}`;
 }
 
-let current={};
-
-function openPart(key){
-  const el=document.getElementById("work-"+key);
-  el.classList.add("show");
-
-  if(key==="reason"){
-    el.innerHTML=`
-      <div class="q"><strong>1. Förklara</strong>
-      <p>Vad är skillnaden mellan siffran 6 och värdet 6 000 i ett tal?</p>
-      <textarea id="r1" placeholder="Skriv hur du tänker..."></textarea></div>
-      <div class="q"><strong>2. Förklara</strong>
-      <p>Hur kan du avgöra vilket av två femsiffriga tal som är störst?</p>
-      <textarea id="r2" placeholder="Använd gärna ord som tiotusental, tusental och platsvärde."></textarea></div>
-      <button class="btn" onclick="finishText('reason',['r1','r2'])">Spara mina svar</button>
-      <div id="msg-reason" class="feedback"></div>`;
-    return;
-  }
-
-  if(key==="problem"){
-    el.innerHTML=`
-      <div class="q"><strong>Problem 1</strong>
-      <p>Ett museum hade 48 762 besökare ett år. Året efter hade det 52 349 besökare. Hur många fler kom det andra året? Avrunda också båda talen till närmaste tusental.</p>
-      <textarea id="p1" placeholder="Visa beräkning och förklara..."></textarea></div>
-      <div class="q"><strong>Problem 2</strong>
-      <p>Skriv ett tal som har 7 tiotusental, 3 tusental, 5 hundratal, 0 tiotal och 8 ental. Skriv sedan talet i utvecklad form.</p>
-      <textarea id="p2" placeholder="Visa ditt svar och förklara..."></textarea></div>
-      <button class="btn" onclick="finishText('problem',['p1','p2'])">Lämna problemlösning</button>
-      <div id="msg-problem" class="feedback"></div>`;
-    return;
-  }
-
-  let generator,count;
-  if(key==="position"){generator=questionPosition;count=12}
-  if(key==="expanded"){generator=questionExpanded;count=12}
-  if(key==="compare"){generator=questionCompare;count=12}
-  if(key==="round"){generator=questionRound;count=12}
-  if(key==="negative"){generator=questionNegative;count=12}
-  if(key==="check"){generator=mixedQuestion;count=15}
-
-  const qs=Array.from({length:count},()=>generator());
-  current[key]=qs;
-
-  el.innerHTML=`
-    <div class="example">
-      ${key==="position"?"Exempel: I 34 582 har siffran 4 värdet 4 000.":
-        key==="expanded"?"Exempel: 6 432 = 6 000 + 400 + 30 + 2.":
-        key==="compare"?"Jämför från vänster. Börja med den största platsen.":
-        key==="round"?"Titta på siffran till höger om den plats du avrundar till.":
-        key==="negative"?"På tallinjen är tal längre åt höger större.":
-        "Kapitelkollen blandar alla delområden."}
-    </div>
-    ${qs.map((q,i)=>`
-      <div class="q">
-        <strong>${i+1}. ${q[0]}</strong>
-        <div class="answer">
-          <input id="${key}-${i}" autocomplete="off">
-          <button class="btn secondary" onclick="checkOne('${key}',${i})">Kontrollera</button>
-        </div>
-        <div class="feedback" id="fb-${key}-${i}"></div>
-      </div>`).join("")}
-    <div class="footer-actions">
-      <button class="btn" onclick="finishQuiz('${key}')">Rätta hela delen</button>
-      <button class="btn secondary" onclick="openPart('${key}')">Ny omgång</button>
-    </div>
-    <div id="score-${key}" class="feedback"></div>`;
+function toggle(id){
+  if(id===1)return;
+  state.open[id]=!state.open[id];
+  save()
+}
+function startJourney(){
+  const current=chapters.find(c=>state.open[c.id]&&pct(c.id)<100)||chapters.find(c=>state.open[c.id])||chapters[0];
+  openChapter(current.id)
+}
+function openChapter(id){
+  if(!state.open[id])return;
+  alert(`Nästa steg blir att bygga själva träningssidan för Kapitel ${id}: ${chapters.find(c=>c.id===id).title}.`)
 }
 
-function checkOne(key,i){
-  const q=current[key][i];
-  const val=document.getElementById(`${key}-${i}`).value;
-  const fb=document.getElementById(`fb-${key}-${i}`);
-  const ok=norm(val)===norm(q[1]);
-  fb.textContent=ok?"Rätt!":"Försök igen.";
-  fb.className="feedback "+(ok?"ok":"no");
+teacherBtn.onclick=()=>{modal.classList.add("show");pin.value="";msg.textContent=""}
+pinOk.onclick=()=>{
+ if(pin.value==="2468"){
+   modal.classList.remove("show");
+   teacherPanel.classList.add("show");
+   teacherPanel.scrollIntoView({behavior:"smooth"})
+ }else msg.textContent="Fel PIN-kod."
 }
-
-function finishQuiz(key){
-  const qs=current[key];
-  let right=0;
-  qs.forEach((q,i)=>{
-    const val=document.getElementById(`${key}-${i}`).value;
-    if(norm(val)===norm(q[1]))right++;
-  });
-  const pct=Math.round(right/qs.length*100);
-  state.scores[key]=pct;
-  const msg=document.getElementById("score-"+key);
-
-  if(pct>=80){
-    state.done[key]=true;
-    msg.textContent=`${right} av ${qs.length} rätt (${pct} %). Delen är klar!`;
-    msg.className="feedback ok";
-    localStorage.setItem(STORE,JSON.stringify(state));
-    syncMainProgress();
-    setTimeout(()=>render(),500);
-  }else{
-    msg.textContent=`${right} av ${qs.length} rätt (${pct} %). Du behöver minst 80 %. Träna vidare och försök igen.`;
-    msg.className="feedback no";
-    localStorage.setItem(STORE,JSON.stringify(state));
-  }
-}
-
-function finishText(key,ids){
-  const vals=ids.map(id=>document.getElementById(id).value.trim());
-  const msg=document.getElementById("msg-"+key);
-  if(vals.some(v=>v.length<30)){
-    msg.textContent="Utveckla båda svaren lite mer så att ditt matematiska tänkande syns.";
-    msg.className="feedback no";
-    return;
-  }
-  state.done[key]=true;
-  msg.textContent="Svaren är sparade. Delen är klar.";
-  msg.className="feedback ok";
-  save();
-}
-
-function resetChapter(){
-  if(confirm("Vill du nollställa hela Kapitel 1?")){
-    state={done:{},scores:{}};
-    localStorage.removeItem(STORE);
-    save();
-  }
-}
-
-render();
-syncMainProgress();
+render()
 </script>
 </body>
 </html>
